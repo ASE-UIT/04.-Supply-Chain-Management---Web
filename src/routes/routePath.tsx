@@ -1,4 +1,5 @@
 import PartnerListLayout from "@/components/partner-list/tab/tabLayout/PartnerListLayout";
+import ProductListLayout from "@/components/product-list/tabLayout/ProductListLayout";
 import WareHouseListLayout from "@/components/warehouse-list/tab/tabLayout/WarehouseListLayout";
 // import ProductListLayout from "@/components/product-list/tabLayout/ProductListLayout";
 
@@ -134,7 +135,7 @@ function Partner() {
 }
 
 function Warehouse() {
-  return <WareHouseListLayout />
+  return <WareHouseListLayout />;
 }
 
 function MyWarehouse() {
@@ -147,10 +148,7 @@ function MyWarehouse() {
 }
 
 function ProductManagement() {
-  return (
-    // <ProductListLayout />
-    <></>
-  );
+  return <ProductListLayout />;
 }
 
 function DailyReport() {
