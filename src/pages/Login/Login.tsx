@@ -1,4 +1,3 @@
-import huyHieuCA from '@/assets/HuyHieuCA.png';
 import '@/pages/Login/Login.css';
 import { login } from '@/redux/reducers/userReducers';
 import { RootState } from '@/redux/store';
@@ -46,7 +45,7 @@ const Login: React.FC = () => {
                     <div className="row justify-content-sm-center h-100">
                         <div className="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
                             <div className="text-center my-5">
-                                <img src={huyHieuCA} alt="logo" width="100" />
+                                <img src="" alt="logo" width="100" />
                             </div>
                             <div className="card shadow-lg">
                                 <div className="card-body p-5">

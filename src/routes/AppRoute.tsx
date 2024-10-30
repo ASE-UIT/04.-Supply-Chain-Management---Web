@@ -1,10 +1,14 @@
 import Layout from "@/components/layout/Layout";
 import Login from "@/pages/Login/Login";
-import { RootState } from "@/redux/store";
 import { routePath } from "@/routes/routePath";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
+// import { RootState } from "@/redux/store";
+// import { useSelector } from "react-redux";
+import {
+  Route,
+  Routes,
+  // useNavigate 
+} from "react-router-dom";
 
 export default function AppRoute() {
   // const navigate = useNavigate();

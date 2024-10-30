@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "./DataTable.scss";
-import { Icon } from "@iconify/react";
 
-import PaginationContent from "@/components/partner-list/pagination/PaginationContent";
+import PaginationContent from "@/pages/PartnerList/pagination/PaginationContent";
+import { formatCurrencyVND } from "@/utils/helper";
 import ButtonActionDelete from "./ButtonActionDelete";
 import ButtonActionEdit from "./ButtonActionEdit";
-import { formatCurrencyVND } from "@/utils/helper";
 
 export interface DataProduct {
   id: string;

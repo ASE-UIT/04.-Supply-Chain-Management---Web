@@ -1,11 +1,9 @@
 "use client";
-import React, { useState } from "react";
 //import TabButton from "../tabButton/TabButton";
 import TabContent from "../tabContent/content/TabContent";
 import "./WarehouseListLayout.scss";
 
 const WarehouseListLayout = () => {
-  const [isClick, setClick] = useState("all");
 
   return (
     <div className="warehouse-list-layout">

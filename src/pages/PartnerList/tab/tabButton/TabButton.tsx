@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./TabButton.scss";
 import ButtonComponent, { ButtonComponentProps } from "./ButtonComponent";
 

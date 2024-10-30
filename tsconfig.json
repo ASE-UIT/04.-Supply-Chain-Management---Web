@@ -20,5 +20,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "svgr.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["src", "svgr.d.ts", "**/*.ts", "**/*.tsx", "src/stories"]
 }

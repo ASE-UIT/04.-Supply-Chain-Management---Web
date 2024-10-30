@@ -1,7 +1,7 @@
-import PartnerListLayout from "@/components/partner-list/tab/tabLayout/PartnerListLayout";
-import ProductListLayout from "@/components/product-list/tabLayout/ProductListLayout";
-import WareHouseListLayout from "@/components/warehouse-list/tab/tabLayout/WarehouseListLayout";
-// import ProductListLayout from "@/components/product-list/tabLayout/ProductListLayout";
+import PartnerListLayout from "@/pages/PartnerList/tab/tabLayout/PartnerListLayout";
+import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
+import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
+// import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
 
 import { Link } from "react-router-dom";
 
@@ -12,14 +12,14 @@ export const routePath = [
     path: "partner",
     icon: "far fa-circle",
     title: "Partner",
-    component: <Partner />,
+    component: <PartnerListLayout />,
   },
   {
     index: false,
     path: "warehouse",
     icon: "far fa-circle",
     title: "Warehouse",
-    component: <Warehouse />,
+    component: <WareHouseListLayout />,
   },
   {
     index: false,
@@ -31,7 +31,7 @@ export const routePath = [
         index: false,
         path: "product-management",
         title: "Product Management",
-        component: <ProductManagement />,
+        component: <ProductListLayout />,
       },
       {
         index: false,
@@ -129,15 +129,6 @@ export const routePath = [
   },
 ];
 
-// Các component sử dụng trong routePath
-function Partner() {
-  return <PartnerListLayout />;
-}
-
-function Warehouse() {
-  return <WareHouseListLayout />;
-}
-
 function MyWarehouse() {
   return (
     <div>
@@ -145,10 +136,6 @@ function MyWarehouse() {
       <p>Chi tiết kho hàng của bạn</p>
     </div>
   );
-}
-
-function ProductManagement() {
-  return <ProductListLayout />;
 }
 
 function DailyReport() {

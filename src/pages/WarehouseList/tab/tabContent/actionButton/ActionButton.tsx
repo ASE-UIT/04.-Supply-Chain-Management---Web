@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import "./ActionButton.scss";
 import Button from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
-import { CreateWarehouse } from "@/components/form/CreateWarehouse/CreateWarehouse";
+import { useState } from "react";
+import "./ActionButton.scss";
 
 const ActionButton = () => {
   const [clickNew, setClickNew] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./DataTable.scss";
-import PaginationContent from "@/components/warehouse-list/pagination/PaginationContent";
+import PaginationContent from "@/pages/WarehouseList/pagination/PaginationContent";
 
 export interface DataWarehouse {
   id: string;

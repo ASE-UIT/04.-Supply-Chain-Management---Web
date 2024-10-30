@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import "./TabEditProduct.scss";
-import Button from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
+import React, { useState } from "react";
 import { DataProduct } from "../tabContent/table/DataTable";
+import "./TabEditProduct.scss";
 
 interface TabEditProducProps {
   isOpen: boolean;
@@ -15,7 +14,6 @@ const TabEditProduct: React.FC<TabEditProducProps> = ({
   onClose,
   dataProduct,
 }) => {
-  const [clickNew, setClickNew] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   // const [isOpen, setIsOpen] = useState(true);

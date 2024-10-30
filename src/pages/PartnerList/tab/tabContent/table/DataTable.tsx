@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import "./DataTable.scss";
-import { Icon } from "@iconify/react";
+import PaginationContent from "@/pages/PartnerList/pagination/PaginationContent";
+import { useState } from "react";
 import ButtonActionDelete from "./ButtonActionDelete";
 import ButtonActionEdit from "./ButtonActionEdit";
-import PaginationContent from "@/components/partner-list/pagination/PaginationContent";
+import "./DataTable.scss";
 
 export interface DataWarehouse {
   id: string;
