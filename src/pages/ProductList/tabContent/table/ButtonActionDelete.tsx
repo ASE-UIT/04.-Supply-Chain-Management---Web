@@ -2,20 +2,19 @@ import Button from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
 import React from "react";
 import { DataProduct } from "./DataTable";
+import { useDispatch } from "react-redux";
+import { removeProduct } from "@/redux/reducers/productReducers";
 
 interface DeleteButtonProps {
-  setData: React.Dispatch<React.SetStateAction<DataProduct[]>>;
-  data: DataProduct[];
-  idItemDelete: string;
+  idItemDelete: number;
 }
 
 const ButtonActionDelete: React.FC<DeleteButtonProps> = ({
-  setData,
-  data,
   idItemDelete,
 }) => {
+  const dispatch = useDispatch();
   const handleDelete = () => {
-    setData(data.filter((item) => item.id !== idItemDelete));
+    dispatch(removeProduct({ id: idItemDelete }));
   };
 
   return (

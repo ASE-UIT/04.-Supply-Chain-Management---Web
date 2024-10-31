@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./AddProductDialog.scss";
+import { useDispatch } from "react-redux";
+import { createProduct } from "@/redux/reducers/productReducers";
 
 interface AddProductDialogProps {
   isOpen: boolean;
@@ -10,16 +12,26 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
   isOpen,
   onClose,
 }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [supplier, setSupplier] = useState("");
-  const [type, setType] = useState("Normal");
-  const [size, setSize] = useState("");
-  const [weight, setWeight] = useState("");
+  const [type, setType] = useState("NORMAL");
+  const [size, setSize] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [unit, setUnit] = useState("");
 
   const handleCreate = () => {
-    // Handle product creation logic here
-    console.log({ name, price, supplier, type, size, weight });
+    dispatch(createProduct({
+      data: {
+        name,
+        type,
+        size,
+        weight,
+        quantity,
+        unit,
+        status: "NORMAL",
+      }
+    }));
     onClose();
   };
 
@@ -47,11 +59,11 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
               />
             </label>
             <label>
-              Price <span className="required">*</span>
+              Unit <span className="required">*</span>
               <input
                 type="text"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={unit}
+                onChange={(e) => setUnit(e.target.value)}
                 required
               />
             </label>
@@ -59,35 +71,35 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
 
           <div className="input-group">
             <label>
-              Supplier
+              Quantity
               <input
-                type="text"
-                value={supplier}
-                onChange={(e) => setSupplier(e.target.value)}
+                type="number"
+                value={quantity.toString()}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
               />
             </label>
             <label>
               Type
               <select value={type} onChange={(e) => setType(e.target.value)}>
-                <option value="Normal">Normal</option>
-                <option value="Special">Special</option>
+                <option value="NORMAL">Normal</option>
+                <option value="COLD">Cold</option>
               </select>
             </label>
             <div className="dimensions">
               <label>
-                Size (cm)
+                Size (cm3)
                 <input
-                  type="text"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
+                  type="number"
+                  value={size.toString()}
+                  onChange={(e) => setSize(parseFloat(e.target.value))}
                 />
               </label>
               <label>
-                Weight (kg)
+                Weight (g)
                 <input
                   type="number"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  value={weight.toString()}
+                  onChange={(e) => setWeight(parseFloat(e.target.value))}
                   step="0.01"
                 />
               </label>

@@ -1,10 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import userReducer from "./userReducers";
-import partnerReducer from "./partnerReducers";
+import userReducers from "./userReducers";
+import partnerReducers from "./partnerReducers";
 import warehouseReducers from "./warehouseReducers";
+import productReducers from "./productReducers";
 
 export default combineReducers({
-    user: userReducer,
-    partner: partnerReducer,
+    user: userReducers,
+    partner: partnerReducers,
     warehouse: warehouseReducers,
+    product: productReducers,
 });

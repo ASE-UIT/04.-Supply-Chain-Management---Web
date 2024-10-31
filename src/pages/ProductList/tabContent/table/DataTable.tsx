@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DataTable.scss";
 
 import PaginationContent from "@/pages/PartnerList/pagination/PaginationContent";
-import { formatCurrencyVND } from "@/utils/helper";
+import { listProduct } from "@/redux/reducers/productReducers";
+import { RootState } from "@/redux/store";
+import { type } from "@testing-library/user-event/dist/type";
+import { useDispatch, useSelector } from "react-redux";
 import ButtonActionDelete from "./ButtonActionDelete";
 import ButtonActionEdit from "./ButtonActionEdit";
 
 export interface DataProduct {
-  id: string;
+  id: number;
   name: string;
-  price: number;
-  nameSupplier: string;
+  quantity: number;
+  unit: string;
+  status: string;
   type: string;
-  size: string;
+  size: number;
   weight: number;
 }
 
@@ -21,97 +25,39 @@ interface DataTableProps {
   onClickEdit: (item: DataProduct) => void;
 }
 
-export const initialDataProduct: DataProduct[] = [
-  {
-    id: "1",
-    name: "Product A",
-    price: 100000,
-    nameSupplier: "Supplier X",
-    type: "Electronics",
-    size: "Medium",
-    weight: 1,
-  },
-  {
-    id: "2",
-    name: "Product B",
-    price: 150000,
-    nameSupplier: "Supplier Y",
-    type: "Clothing",
-    size: "Large",
-    weight: 0.5,
-  },
-  {
-    id: "3",
-    name: "Product C",
-    price: 200000,
-    nameSupplier: "Supplier Z",
-    type: "Accessories",
-    size: "Small",
-    weight: 0.25,
-  },
-  {
-    id: "4",
-    name: "Product D",
-    price: 120000,
-    nameSupplier: "Supplier A",
-    type: "Gadgets",
-    size: "Large",
-    weight: 5,
-  },
-  {
-    id: "5",
-    name: "Product E",
-    price: 180000,
-    nameSupplier: "Supplier B",
-    type: "Furniture",
-    size: "Extra Large",
-    weight: 10,
-  },
-  {
-    id: "6",
-    name: "Product F",
-    price: 90000,
-    nameSupplier: "Supplier C",
-    type: "Toys",
-    size: "Small",
-    weight: 0.5,
-  },
-  {
-    id: "7",
-    name: "Product G",
-    price: 1100000,
-    nameSupplier: "Supplier D",
-    type: "Books",
-    size: "Medium",
-    weight: 1.5,
-  },
-  {
-    id: "8",
-    name: "Product H",
-    price: 300000,
-    nameSupplier: "Supplier E",
-    type: "Electronics",
-    size: "Medium",
-    weight: 3,
-  },
-];
-
 const DataTable: React.FC<DataTableProps> = ({ onRowClick, onClickEdit }) => {
-  const [data, setData] = useState<DataProduct[]>(initialDataProduct);
+  const dispatch = useDispatch();
+  const productAPI = useSelector((state: RootState) => state.product.data);
+  const [data, setData] = useState<DataProduct[]>([]);
 
+  //Pagination
   const [quantity, setQuantity] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(initialDataProduct.length / quantity);
-  const startIndex = (currentPage - 1) * quantity;
-  const endIndex = startIndex + quantity;
-  const currentData = data.slice(startIndex, endIndex);
-  const items = {
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    setQuantity,
+  const [currentData, setCurrentData] = useState<DataProduct[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+
+  useEffect(() => {
+    dispatch(listProduct())
+  }, []);
+
+  useEffect(() => {
+    setData(productAPI);
+  }, [productAPI]);
+
+  useEffect(() => {
+    if (data.length) {
+      const totalPages = Math.ceil(data.length / quantity);
+      const startIndex = (currentPage - 1) * quantity;
+      const endIndex = startIndex + quantity;
+      const currentData = data.slice(startIndex, endIndex);
+      setCurrentData(currentData);
+      setTotalPages(totalPages);
+    }
+  }, [
+    data,
     quantity,
-  };
+    currentPage
+  ]);
 
   return (
     <div className="table-div">
@@ -119,20 +65,26 @@ const DataTable: React.FC<DataTableProps> = ({ onRowClick, onClickEdit }) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Price (đ)</th>
-            <th>Supplier</th>
+            <th>Quantity</th>
+            <th>Unit</th>
             <th>Type</th>
-            <th>Size (cm)</th>
-            <th>Weight (kg)</th>
+            <th>Size (cm3)</th>
+            <th>Weight (g)</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentData.map((item) => (
-            <tr key={item.id} onClick={() => onRowClick(item)}>
+            <tr data-t={item.id} key={item.id} onClick={(event) => {
+              // Ignore click event when target is not this
+              if (event.target !== event.currentTarget) {
+                return;
+              }
+              onRowClick(item)
+            }}>
               <td>{item.name}</td>
-              <td>{formatCurrencyVND(item.price)}</td>
-              <td>{item.nameSupplier}</td>
+              <td>{item.quantity}</td>
+              <td>{item.unit}</td>
               <td>{item.type}</td>
               <td>{item.size}</td>
               <td>{item.weight}</td>
@@ -144,8 +96,6 @@ const DataTable: React.FC<DataTableProps> = ({ onRowClick, onClickEdit }) => {
                     }}
                   />
                   <ButtonActionDelete
-                    setData={setData}
-                    data={data}
                     idItemDelete={item.id}
                   />
                 </div>
@@ -155,7 +105,13 @@ const DataTable: React.FC<DataTableProps> = ({ onRowClick, onClickEdit }) => {
         </tbody>
       </table>
 
-      <PaginationContent items={items} />
+      <PaginationContent items={{
+        currentPage,
+        setCurrentPage,
+        totalPages,
+        setQuantity,
+        quantity
+      }} />
     </div>
   );
 };

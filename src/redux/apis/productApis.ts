@@ -22,17 +22,17 @@ export const productApis = {
         return yield MainApiRequest.post(`/products`, data, config)
     },
 
-    update: function* (data: CreateProductType): any {
+    update: function* (id: number, data: CreateProductType): any {
         const config: AxiosRequestConfig = {
             headers: {
                 'Content-Type': 'application/json',
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.put(`/products`, data, config)
+        return yield MainApiRequest.put(`/products/${id}`, data, config)
     },
 
-    delete: function* (id: string): any {
+    delete: function* (id: number): any {
         const config: AxiosRequestConfig = {
             headers: {
                 'Content-Type': 'application/json',
