@@ -12,7 +12,7 @@ const PartnerListLayout = () => {
       <p className="title-text">Partner List</p>
       <div className="tab-layout-div">
         <TabButton isClick={isClick} setClick={setClick} />
-        {isClick === "all" && <TabContent />}
+        <TabContent type={isClick} />
       </div>
     </div>
   );

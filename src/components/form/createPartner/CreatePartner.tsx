@@ -1,17 +1,21 @@
 import { useState } from "react";
 import "./CreatePartner.scss";
+import { useDispatch } from "react-redux";
+import { createPartner } from "@/redux/reducers/partnerReducers";
 
 export const CreatePartner = ({ onclose }: any) => {
-  const [activeType, setActiveType] = useState<string | null>("supplier");
+  const dispatch = useDispatch();
+  const [activeType, setActiveType] = useState<string | null>("PARTNER_SUPPLIER");
   const [name, setName] = useState<string>("");
-  const [owner, setOwner] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
 
   const handleClick = (type: string) => {
     setActiveType(type);
   };
 
   const handleCreatePartner = () => {
+    dispatch(createPartner({ data: { name, email, phoneNumber: phone, type: activeType } }));
     onclose();
   };
 
@@ -28,20 +32,20 @@ export const CreatePartner = ({ onclose }: any) => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="add-owner">
-            <p className="title-add-owner">Owner</p>
+          <div className="add-location">
+            <p className="title-add-location">Email</p>
             <input
-              className="input-owner"
-              value={owner}
-              onChange={(e) => setOwner(e.target.value)}
+              className="input-location"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="add-location">
-            <p className="title-add-location">Location</p>
+            <p className="title-add-location">Phone</p>
             <input
               className="input-location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
         </div>
@@ -51,26 +55,23 @@ export const CreatePartner = ({ onclose }: any) => {
             <p className="type-title">Type</p>
             <div className="select-box">
               <div
-                className={`type-option ${
-                  activeType === "supplier" ? "active" : ""
-                }`}
-                onClick={() => handleClick("supplier")}
+                className={`type-option ${activeType === "PARTNER_SUPPLIER" ? "active" : ""
+                  }`}
+                onClick={() => handleClick("PARTNER_SUPPLIER")}
               >
                 Supplier
               </div>
               <div
-                className={`type-option ${
-                  activeType === "warehouse" ? "active" : ""
-                }`}
-                onClick={() => handleClick("warehouse")}
+                className={`type-option ${activeType === "PARTNER_WAREHOUSE" ? "active" : ""
+                  }`}
+                onClick={() => handleClick("PARTNER_WAREHOUSE")}
               >
                 Warehouse
               </div>
               <div
-                className={`type-option ${
-                  activeType === "transport" ? "active" : ""
-                }`}
-                onClick={() => handleClick("transport")}
+                className={`type-option ${activeType === "PARTNER_DELIVER" ? "active" : ""
+                  }`}
+                onClick={() => handleClick("PARTNER_DELIVER")}
               >
                 Transport Provider
               </div>

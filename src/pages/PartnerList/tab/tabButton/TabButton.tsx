@@ -4,9 +4,9 @@ import ButtonComponent, { ButtonComponentProps } from "./ButtonComponent";
 
 const tab: ButtonComponentProps[] = [
   { label: "All", value: "all" },
-  { label: "Supplier", value: "supplier" },
-  { label: "Warehouse", value: "warehouse" },
-  { label: "Transport Provider", value: "transport" }
+  { label: "Supplier", value: "PARTNER_SUPPLIER" },
+  { label: "Warehouse", value: "PARTNER_WAREHOUSE" },
+  { label: "Transport Provider", value: "PARTNER_DELIVER" }
 ];
 
 interface tabButtonProps {
