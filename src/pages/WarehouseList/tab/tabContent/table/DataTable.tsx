@@ -1,173 +1,97 @@
-import React, { useState } from "react";
-import "./DataTable.scss";
 import PaginationContent from "@/pages/WarehouseList/pagination/PaginationContent";
+import { listWarehouse } from "@/redux/reducers/warehouseReducers";
+import { RootState } from "@/redux/store";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ButtonActionDelete from "./ButtonActionDelete";
+import ButtonActionEdit from "./ButtonActionEdit";
+import "./DataTable.scss";
 
 export interface DataWarehouse {
-  id: string;
-  WarehouseName: string;
-  address: string;
-  type: string;
-  price: string;
-  partner: string;
-  manager: string;
+  id: number,
+  name: string,
+  address: string,
+  type: string,
+  capacity: number,
+  availability: boolean,
 }
 
-export const initialDataWarehouse: DataWarehouse[] = [
-  {
-    id: "1",
-    WarehouseName: "Warehouse 1",
-    address: "123, Tran Hung Dao",
-    type: "Seft",
-    price: "100.000 USD",
-    partner: "CTY TNHH ABC",
-    manager: "Nguyen Thi A"
-  },
-  {
-    id: "2",
-    WarehouseName: "Warehouse 2",
-    address: "456, Le Loi",
-    type: "Rent",
-    price: "200.000 USD",
-    partner: "CTY TNHH XYZ",
-    manager: "Tran Van B"
-  },
-  {
-    id: "3",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "4",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "5",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "6",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "7",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "8",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "9",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "10",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "11",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  },
-  {
-    id: "12",
-    WarehouseName: "Warehouse 3",
-    address: "789, Phan Chau Trinh",
-    type: "Seft",
-    price: "150.000 USD",
-    partner: "CTY TNHH LMN",
-    manager: "Pham Thi C"
-  }
-];
-
 const DataTable = () => {
+  const dispatch = useDispatch();
+  const warehouseAPI = useSelector((state: RootState) => state.warehouse.data);
+  const [data, setData] = useState<DataWarehouse[]>([]);
+  const [editPage, setEditPage] = useState(false);
 
   //Pagination
   const [quantity, setQuantity] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(initialDataWarehouse.length / quantity);
-  const startIndex = (currentPage - 1) * quantity;
-  const endIndex = startIndex + quantity;
-  const currentData = initialDataWarehouse.slice(startIndex, endIndex);
-  const items = {
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    setQuantity,
-    quantity
-  };
+  const [currentData, setCurrentData] = useState<DataWarehouse[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+
+  useEffect(() => {
+    dispatch(listWarehouse())
+  }, []);
+
+  useEffect(() => {
+    setData(warehouseAPI);
+  }, [warehouseAPI]);
+
+  useEffect(() => {
+    if (data.length) {
+      const totalPages = Math.ceil(data.length / quantity);
+      const startIndex = (currentPage - 1) * quantity;
+      const endIndex = startIndex + quantity;
+      const currentData = data.slice(startIndex, endIndex);
+      setCurrentData(currentData);
+      setTotalPages(totalPages);
+    }
+  }, [
+    data,
+    quantity,
+    currentPage
+  ]);
 
   return (
     <div className="table-div">
       <table>
         <thead>
           <tr>
-            <th>Warehouse Name</th>
+            <th>Name</th>
             <th>Address</th>
+            <th>Capacity (m3)</th>
             <th>Type</th>
-            <th>Price</th>
-            <th>Partner</th>
-            <th>Manager</th>
+            <th>Avalability</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentData.map((item) => (
             <tr key={item.id}>
-              <td>{item.WarehouseName}</td>
+              <td>{item.name}</td>
               <td>{item.address}</td>
+              <td>{item.capacity}</td>
               <td>{item.type}</td>
-              <td>{item.price}</td>
-              <td>{item.partner}</td>
-              <td>{item.manager}</td>
+              <td>{item.availability ? 'Yes' : 'No'}</td>
+              <td>
+                <div className="d-flex flex-md-row flex-column action-button">
+                  <ButtonActionEdit setEditPage={setEditPage} />
+                  <ButtonActionDelete
+                    idItemDelete={item.id}
+                  />
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <PaginationContent items={items} />
+      <PaginationContent items={{
+        currentPage,
+        setCurrentPage,
+        totalPages,
+        setQuantity,
+        quantity
+      }} />
     </div>
   );
 };

@@ -22,17 +22,17 @@ export const warehouseApis = {
         return yield MainApiRequest.post(`/warehouses`, data, config)
     },
 
-    update: function* (data: CreateWarehouseType): any {
+    update: function* (id: number, data: CreateWarehouseType): any {
         const config: AxiosRequestConfig = {
             headers: {
                 'Content-Type': 'application/json',
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.put(`/warehouses`, data, config)
+        return yield MainApiRequest.put(`/warehouses/${id}`, data, config)
     },
 
-    delete: function* (id: string): any {
+    delete: function* (id: number): any {
         const config: AxiosRequestConfig = {
             headers: {
                 'Content-Type': 'application/json',

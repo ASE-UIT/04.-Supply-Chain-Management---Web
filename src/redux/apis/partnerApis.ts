@@ -12,14 +12,14 @@ export const partnerApis = {
         return yield MainApiRequest.post(`/partners`, data, config)
     },
 
-    update: function* (id:number, data: { name: string, type: string, email: string, phoneNumber: string }): any {
+    update: function* (id: number, data: { name: string, type: string, email: string, phoneNumber: string }): any {
         const config: AxiosRequestConfig = {
             headers: {
                 'Content-Type': 'application/json',
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.put(`/partners`, data, config)
+        return yield MainApiRequest.put(`/partners${id}`, data, config)
     },
 
     delete: function* (id: number): any {

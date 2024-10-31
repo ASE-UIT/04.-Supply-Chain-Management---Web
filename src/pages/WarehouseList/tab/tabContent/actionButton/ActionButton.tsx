@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import "./ActionButton.scss";
+import { CreateWarehouse } from "@/components/form/CreateWarehouse/CreateWarehouse";
 
 const ActionButton = () => {
   const [clickNew, setClickNew] = useState(false);
@@ -37,6 +38,8 @@ const ActionButton = () => {
           New
         </Button>
       </div>
+
+      {clickNew && <CreateWarehouse onclose={handleClickNewButton} />}
     </div>
   );
 };

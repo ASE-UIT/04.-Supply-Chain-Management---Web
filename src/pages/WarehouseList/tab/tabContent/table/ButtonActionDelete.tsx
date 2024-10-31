@@ -1,21 +1,19 @@
 import Button from "@/components/ui/Button";
+import { removeWarehouse } from "@/redux/reducers/warehouseReducers";
 import { Icon } from "@iconify/react";
 import React from "react";
-import { DataWarehouse } from "./DataTable";
+import { useDispatch } from "react-redux";
 
 interface DeleteButtonProps {
-  setData: React.Dispatch<React.SetStateAction<DataWarehouse[]>>;
-  data: DataWarehouse[];
-  idItemDelete: string;
+  idItemDelete: number;
 }
 
 const ButtonActionDelete = ({
-  setData,
-  data,
   idItemDelete
 }: DeleteButtonProps) => {
+  const dispatch = useDispatch();
   const handleDelete = () => {
-    setData(data.filter((item) => item.id !== idItemDelete));
+    dispatch(removeWarehouse({ id: idItemDelete }));
   };
 
   const deleteButtonStyle: React.CSSProperties = {
@@ -36,7 +34,7 @@ const ButtonActionDelete = ({
         padding="0"
         type="button"
         disabled={false}
-        onClick={handleDelete}
+        // onClick={handleDelete}
       >
         <Icon
           icon="lucide:trash-2"

@@ -1,10 +1,12 @@
 import { all, fork } from 'redux-saga/effects';
 import userSagas from './userSagas';
 import partnerSagas from './partnerSagas';
+import warehouseSagas from './warehouseSagas';
 
 const allSaga = [
 	...userSagas,
 	...partnerSagas,
+	...warehouseSagas,
 ];
 
 function* rootSagas() {
