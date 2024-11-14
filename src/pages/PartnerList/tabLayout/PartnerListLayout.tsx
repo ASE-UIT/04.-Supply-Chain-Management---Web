@@ -9,7 +9,7 @@ import TabButton from "../tabButton/TabButton";
 import "./PartnerListLayout.scss";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
-import { removePartner } from "@/redux/reducers/partnerReducers";
+import { listPartner, removePartner } from "@/redux/reducers/partnerReducers";
 export interface DataPartner {
   id: number;
   name: string;
@@ -39,6 +39,9 @@ const PartnerListLayout = () => {
     setData(newData);
   }, [type]);
 
+  useEffect(() => {
+    dispatch(listPartner())
+  }, [partnerAPI]);
 
   return (
     <TableLayout
