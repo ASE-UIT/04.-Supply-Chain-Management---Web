@@ -23,7 +23,7 @@ export const CreatePartner = ({ onclose }: any) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h3 className="title-add">Add New Partner</h3>
-        <div className="add-info-box">
+        <div className="add-info-box" style={{ height: 268 }}>
           <div className="add-name">
             <p className="title-add-name">Name</p>
             <input

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./DataTable.scss";
-
-import PaginationContent from "@/pages/PartnerList/pagination/PaginationContent";
 import { listProduct } from "@/redux/reducers/productReducers";
 import { RootState } from "@/redux/store";
 import { type } from "@testing-library/user-event/dist/type";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonActionDelete from "./ButtonActionDelete";
 import ButtonActionEdit from "./ButtonActionEdit";
+import PaginationContent from "@/components/layout/TableLayout/DataTable/PaginationContent";
 
 export interface DataProduct {
   id: number;

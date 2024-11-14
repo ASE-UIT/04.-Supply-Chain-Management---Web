@@ -2,25 +2,24 @@ import Button from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
 import React from "react";
 
-interface EditButtonProps {
-  setEditPage: React.Dispatch<React.SetStateAction<boolean>>;
+interface DeleteButtonProps {
+  onClickDelete?: () => void;
 }
 
-const ButtonActionEdit = ({ setEditPage }: EditButtonProps) => {
-  const handleOpenEditPage = () => {
-    setEditPage(true);
-    console.log("Edit page is opened");
-  };
+const ButtonActionDelete = ({
+  onClickDelete
+}: DeleteButtonProps) => {
 
-  const editButtonStyle: React.CSSProperties = {
+  const deleteButtonStyle: React.CSSProperties = {
     display: "flex",
     width: "auto",
     height: "auto",
     zIndex: 10,
     cursor: "pointer"
   };
+
   return (
-    <div style={editButtonStyle} onClick={handleOpenEditPage}>
+    <div style={deleteButtonStyle} onClick={onClickDelete}>
       <Button
         variant="primary"
         size="medium"
@@ -29,9 +28,10 @@ const ButtonActionEdit = ({ setEditPage }: EditButtonProps) => {
         padding="0"
         type="button"
         disabled={false}
+      // onClick={handleDelete}
       >
         <Icon
-          icon="fluent:edit-12-regular"
+          icon="lucide:trash-2"
           width={24}
           height={24}
           style={{ color: "#1c1c1c" }}
@@ -41,4 +41,4 @@ const ButtonActionEdit = ({ setEditPage }: EditButtonProps) => {
   );
 };
 
-export default ButtonActionEdit;
+export default ButtonActionDelete;

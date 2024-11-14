@@ -86,9 +86,9 @@ const PaginationContent: React.FC<Props> = ({ items }) => {
           <p className="view-text">View</p>
           <div className="select-quantity">
             <select onChange={handleSelect} value={quantity}>
-              {Array.from({ length: 10 }, (_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}
+              {[5, 10, 20, 50, 100].map((i) => (
+                <option key={i} value={i}>
+                  {i}
                 </option>
               ))}
             </select>
@@ -98,9 +98,8 @@ const PaginationContent: React.FC<Props> = ({ items }) => {
         <div className="pagination-div">
           <Pagination>
             <Pagination.Prev
-              className={`prev page-item ${
-                currentPage === 1 ? "disabled" : ""
-              }`}
+              className={`prev page-item ${currentPage === 1 ? "disabled" : ""
+                }`}
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
             >
@@ -110,9 +109,8 @@ const PaginationContent: React.FC<Props> = ({ items }) => {
             {renderPaginationItems()}
 
             <Pagination.Next
-              className={`next page-item ${
-                currentPage === totalPages ? "disabled" : ""
-              }`}
+              className={`next page-item ${currentPage === totalPages ? "disabled" : ""
+                }`}
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
             >

@@ -1,4 +1,4 @@
-import PartnerListLayout from "@/pages/PartnerList/tab/tabLayout/PartnerListLayout";
+import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
 import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
 import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
 // import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";

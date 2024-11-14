@@ -1,31 +1,22 @@
 import Button from "@/components/ui/Button";
-import { removePartner } from "@/redux/reducers/partnerReducers";
 import { Icon } from "@iconify/react";
 import React from "react";
-import { useDispatch } from "react-redux";
 
-interface DeleteButtonProps {
-  idItemDelete: number;
+interface EditButtonProps {
+  onClickEdit?: () => void;
 }
 
-const ButtonActionDelete = ({
-  idItemDelete
-}: DeleteButtonProps) => {
-  const dispatch = useDispatch();
-  const handleDelete = () => {
-    dispatch(removePartner({ id: idItemDelete }));
-  };
+const ButtonActionEdit = ({ onClickEdit }: EditButtonProps) => {
 
-  const deleteButtonStyle: React.CSSProperties = {
+  const editButtonStyle: React.CSSProperties = {
     display: "flex",
     width: "auto",
     height: "auto",
     zIndex: 10,
     cursor: "pointer"
   };
-
   return (
-    <div style={deleteButtonStyle} onClick={handleDelete}>
+    <div style={editButtonStyle} onClick={onClickEdit}>
       <Button
         variant="primary"
         size="medium"
@@ -34,10 +25,9 @@ const ButtonActionDelete = ({
         padding="0"
         type="button"
         disabled={false}
-        // onClick={handleDelete}
       >
         <Icon
-          icon="lucide:trash-2"
+          icon="fluent:edit-12-regular"
           width={24}
           height={24}
           style={{ color: "#1c1c1c" }}
@@ -47,4 +37,4 @@ const ButtonActionDelete = ({
   );
 };
 
-export default ButtonActionDelete;
+export default ButtonActionEdit;
