@@ -40,6 +40,10 @@ const PartnerListLayout = () => {
   }, [type]);
 
   useEffect(() => {
+    setData(partnerAPI);
+  }, [partnerAPI]);
+
+  useEffect(() => {
     dispatch(listPartner())
   }, []);
 
