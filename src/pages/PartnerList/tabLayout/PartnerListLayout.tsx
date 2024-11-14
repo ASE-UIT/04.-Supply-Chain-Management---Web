@@ -41,7 +41,7 @@ const PartnerListLayout = () => {
 
   useEffect(() => {
     dispatch(listPartner())
-  }, [partnerAPI]);
+  }, []);
 
   return (
     <TableLayout
