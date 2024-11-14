@@ -1,5 +1,6 @@
 import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
 import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
+import Vehicle from "@/pages/Vehicle/Vehicle";
 import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
 // import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
 
@@ -161,15 +162,6 @@ function ExportManagement() {
     <div>
       <h2>Export Management</h2>
       <p>Quản lý thông tin xuất kho</p>
-    </div>
-  );
-}
-
-function Vehicle() {
-  return (
-    <div>
-      <h2>Vehicle</h2>
-      <p>Quản lý phương tiện vận chuyển</p>
     </div>
   );
 }
