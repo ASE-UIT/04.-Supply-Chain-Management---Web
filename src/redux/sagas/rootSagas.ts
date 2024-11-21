@@ -3,12 +3,14 @@ import userSagas from './userSagas';
 import partnerSagas from './partnerSagas';
 import warehouseSagas from './warehouseSagas';
 import productSagas from './productSagas';
+import legalpersonSagas from './legalpersonSagas';
 
 const allSaga = [
 	...userSagas,
 	...partnerSagas,
 	...warehouseSagas,
 	...productSagas,
+	...legalpersonSagas,
 ];
 
 function* rootSagas() {

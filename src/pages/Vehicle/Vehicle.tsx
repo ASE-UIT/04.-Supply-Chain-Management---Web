@@ -1,5 +1,5 @@
 "use client";
-import { CreatePartner } from "@/components/form/CreatePartner/CreatePartner";
+import { CreatePartner } from "@/components/form/createPartner/CreatePartner";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";

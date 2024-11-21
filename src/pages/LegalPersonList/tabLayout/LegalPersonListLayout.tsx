@@ -1,29 +1,29 @@
 "use client";
-import { CreatePartner } from "@/components/form/createPartner/CreatePartner";
+import { CreateLegalPerson } from "@/components/form/createLegalPerson/CreateLegalPerson";
 import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";
 import { TableLayout } from "@/components/layout/TableLayout/TableLayout";
 import { RootState } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TabButton from "../tabButton/TabButton";
-import "./PartnerListLayout.scss";
+import "./LegalPersonListLayout.scss";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
-import { listPartner, removePartner } from "@/redux/reducers/partnerReducers";
-export interface DataPartner {
+import { listLegalPerson, removeLegalPerson } from "@/redux/reducers/legalpersonReducers";
+export interface DataLegalPerson {
   id: number;
   name: string;
   email: string;
   phoneNumber: string;
-  type: string;
+  adress: string;
+  identityNumber: string;
 }
 
-const PartnerListLayout = () => {
+const LegalPersonListLayout = () => {
   const dispatch = useDispatch();
-  const partnerAPI = useSelector((state: RootState) => state.partner.data);
-  const [data, setData] = useState<DataPartner[]>([]);
+  const legalpersonAPI = useSelector((state: RootState) => state.legalperson.data);
+  const [data, setData] = useState<DataLegalPerson[]>([]);
 
-  const [type, setType] = useState("all");
   const [clickNew, setClickNew] = useState(false);
 
   const handleClickNewButton = () => {
@@ -31,30 +31,24 @@ const PartnerListLayout = () => {
   };
 
   const handleDelete = (id: number) => {
-    dispatch(removePartner({ id }));
+    dispatch(removeLegalPerson({ id }));
   };
 
   useEffect(() => {
-    const newData = partnerAPI.filter((item) => item.type === type || type === 'all');
-    setData(newData);
-  }, [type]);
+    setData(legalpersonAPI);
+  }, [legalpersonAPI]);
 
   useEffect(() => {
-    setData(partnerAPI);
-  }, [partnerAPI]);
-
-  useEffect(() => {
-    dispatch(listPartner())
+    dispatch(listLegalPerson())
   }, []);
 
   return (
     <TableLayout
-      title="Partner List"
-      tabButton={<TabButton isClick={type} setClick={setType} />}
+      title="Legal Person List"
       onClickNew={handleClickNewButton}
     >
       <>
-        {clickNew && <CreatePartner onclose={handleClickNewButton} />}
+        {clickNew && <CreateLegalPerson onclose={handleClickNewButton} />}
         <DataTable
           dataAPI={data}
           headerRender={() => (
@@ -62,8 +56,8 @@ const PartnerListLayout = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Type</th>
-              <th>Actions</th>
+              <th>Adress</th>
+              <th>Identity Number</th>
             </tr>
           )}
           rowRender={
@@ -72,7 +66,8 @@ const PartnerListLayout = () => {
                 <td>{item.name}</td>
                 <td>{item.email}</td>
                 <td>{item.phoneNumber}</td>
-                <td>{item.type}</td>
+                <td>{item.adress}</td>
+                <td>{item.identityNumber}</td>
                 <td>
                   <div className="d-flex flex-md-row flex-column action-button">
                     <ButtonActionEdit onClickEdit={() => { }} />
@@ -88,4 +83,4 @@ const PartnerListLayout = () => {
   );
 };
 
-export default PartnerListLayout;
+export default LegalPersonListLayout;
