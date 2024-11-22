@@ -27,7 +27,7 @@ export const driverApis = {
         // 'Authorization': `Bearer ${authorization}`,
       }
     };
-    return yield MainApiRequest.put(`/drivers${id}`, data, config);
+    return yield MainApiRequest.put(`/drivers/${id}`, data, config);
   },
 
   delete: function* (id: number): any {
