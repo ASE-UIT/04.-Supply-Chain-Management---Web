@@ -9,12 +9,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { listDriver, removeDriver } from "@/redux/reducers/driverReducers";
 import { CreateDriver } from "@/components/form/CreateDriver/CreateDriver";
 
+export enum LicenseType {
+  B2 = "B2",
+  C = "C",
+  D = "D",
+  E = "E",
+}
+
 export interface DataDriver {
   id: number;
   name: string;
   email: string;
   phoneNumber: string;
-  licenseType: string;
+  licenseType: LicenseType;
 }
 
 const DriverListLayout = () => {
@@ -56,8 +63,8 @@ const DriverListLayout = () => {
               <th>Actions</th>
             </tr>
           )}
-          rowRender={(item: any) => (
-            <tr>
+          rowRender={(item: DataDriver) => (
+            <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>{item.phoneNumber}</td>
