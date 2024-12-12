@@ -7,12 +7,21 @@ import { RootState } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listDriver, removeDriver } from "@/redux/reducers/driverReducers";
-import { CreateDriver } from "@/components/form/createDriver/CreateDriver";
+import { CreateDriver } from "@/components/form/CreateDriver/CreateDriver";
+
+export enum LicenseType {
+  B2 = "B2",
+  C = "C",
+  D = "D",
+  E = "E",
+}
+
 export interface DataDriver {
   id: number;
   name: string;
   email: string;
   phoneNumber: string;
+  licenseType: LicenseType;
 }
 
 const DriverListLayout = () => {
@@ -20,7 +29,7 @@ const DriverListLayout = () => {
   const driverAPI = useSelector((state: RootState) => state.driver.data);
   const [data, setData] = useState<DataDriver[]>([]);
 
-  const [type, setType] = useState("all");
+  const [licenseType, setLicenseType] = useState("all");
   const [clickNew, setClickNew] = useState(false);
 
   const handleClickNewButton = () => {
@@ -50,16 +59,16 @@ const DriverListLayout = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Type</th>
+              <th>License Type</th>
               <th>Actions</th>
             </tr>
           )}
-          rowRender={(item: any) => (
-            <tr>
+          rowRender={(item: DataDriver) => (
+            <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>{item.phoneNumber}</td>
-              <td>{item.type}</td>
+              <td>{item.licenseType}</td>
               <td>
                 <div className="d-flex flex-md-row flex-column action-button">
                   <ButtonActionEdit onClickEdit={() => {}} />

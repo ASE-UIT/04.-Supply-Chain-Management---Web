@@ -9,7 +9,7 @@ import "./PartnerListLayout.scss";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
 import { listPartner, removePartner } from "@/redux/reducers/partnerReducers";
-import { CreatePartner } from "@/components/form/createPartner/CreatePartner";
+import { CreatePartner } from "@/components/form/CreatePartner/CreatePartner";
 export interface DataPartner {
   id: number;
   name: string;
