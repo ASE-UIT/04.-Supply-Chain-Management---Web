@@ -1,3 +1,4 @@
+import LegalPersonListLayout from "@/pages/LegalPersonList/tabLayout/LegalPersonListLayout";
 import DriverListLayout from "@/pages/DriverList/DriverListLayout";
 import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
 import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
@@ -123,6 +124,13 @@ export const routePath = [
     icon: "far fa-circle",
     title: "Account",
     component: <Account />
+  },
+  {
+    index: false,
+    path: "legal-person",
+    icon: "far fa-circle",
+    title: "Legal Person",
+    component: <LegalPersonListLayout />,
   },
   {
     index: false,
