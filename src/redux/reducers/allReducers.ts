@@ -4,6 +4,7 @@ import partnerReducers from "./partnerReducers";
 import warehouseReducers from "./warehouseReducers";
 import productReducers from "./productReducers";
 import legalpersonReduces from "./legalpersonReducers";
+import driverReducers from "./driverReducers";
 
 export default combineReducers({
     user: userReducers,
@@ -11,4 +12,5 @@ export default combineReducers({
     warehouse: warehouseReducers,
     product: productReducers,
     legalperson: legalpersonReduces,
+    driver: driverReducers,
 });

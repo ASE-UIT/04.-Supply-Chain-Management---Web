@@ -1,27 +1,35 @@
 "use client";
-import { CreatePartner } from "@/components/form/createPartner/CreatePartner";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";
 import { TableLayout } from "@/components/layout/TableLayout/TableLayout";
-import { removePartner } from "@/redux/reducers/partnerReducers";
 import { RootState } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-export interface DataPartner {
+import { listDriver, removeDriver } from "@/redux/reducers/driverReducers";
+import { CreateDriver } from "@/components/form/CreateDriver/CreateDriver";
+
+export enum LicenseType {
+  B2 = "B2",
+  C = "C",
+  D = "D",
+  E = "E",
+}
+
+export interface DataDriver {
   id: number;
   name: string;
   email: string;
   phoneNumber: string;
-  type: string;
+  licenseType: LicenseType;
 }
 
-const PartnerListLayout = () => {
+const DriverListLayout = () => {
   const dispatch = useDispatch();
-  const partnerAPI = useSelector((state: RootState) => state.partner.data);
-  const [data, setData] = useState<DataPartner[]>([]);
+  const driverAPI = useSelector((state: RootState) => state.driver.data);
+  const [data, setData] = useState<DataDriver[]>([]);
 
-  const [type, setType] = useState("all");
+  const [licenseType, setLicenseType] = useState("all");
   const [clickNew, setClickNew] = useState(false);
 
   const handleClickNewButton = () => {
@@ -29,20 +37,21 @@ const PartnerListLayout = () => {
   };
 
   const handleDelete = (id: number) => {
-    dispatch(removePartner({ id }));
+    dispatch(removeDriver({ id }));
   };
 
   useEffect(() => {
-    const newData = partnerAPI.filter(
-      (item) => item.type === type || type === "all"
-    );
-    setData(newData);
-  }, [type]);
+    setData(driverAPI);
+  }, [driverAPI]);
+
+  useEffect(() => {
+    dispatch(listDriver());
+  }, []);
 
   return (
-    <TableLayout title="Vehicle List" onClickNew={handleClickNewButton}>
+    <TableLayout title="Driver List" onClickNew={handleClickNewButton}>
       <>
-        {clickNew && <CreatePartner onclose={handleClickNewButton} />}
+        {clickNew && <CreateDriver onclose={handleClickNewButton} />}
         <DataTable
           dataAPI={data}
           headerRender={() => (
@@ -50,16 +59,16 @@ const PartnerListLayout = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Type</th>
+              <th>License Type</th>
               <th>Actions</th>
             </tr>
           )}
-          rowRender={(item: any) => (
-            <tr>
+          rowRender={(item: DataDriver) => (
+            <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>{item.phoneNumber}</td>
-              <td>{item.type}</td>
+              <td>{item.licenseType}</td>
               <td>
                 <div className="d-flex flex-md-row flex-column action-button">
                   <ButtonActionEdit onClickEdit={() => {}} />
@@ -78,4 +87,4 @@ const PartnerListLayout = () => {
   );
 };
 
-export default PartnerListLayout;
+export default DriverListLayout;

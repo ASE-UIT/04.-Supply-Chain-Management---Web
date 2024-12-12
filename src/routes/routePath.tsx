@@ -1,4 +1,5 @@
 import LegalPersonListLayout from "@/pages/LegalPersonList/tabLayout/LegalPersonListLayout";
+import DriverListLayout from "@/pages/DriverList/DriverListLayout";
 import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
 import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
 import Vehicle from "@/pages/Vehicle/Vehicle";
@@ -14,14 +15,14 @@ export const routePath = [
     path: "partner",
     icon: "far fa-circle",
     title: "Partner",
-    component: <PartnerListLayout />,
+    component: <PartnerListLayout />
   },
   {
     index: false,
     path: "warehouse",
     icon: "far fa-circle",
     title: "Warehouse",
-    component: <WareHouseListLayout />,
+    component: <WareHouseListLayout />
   },
   {
     index: false,
@@ -33,35 +34,35 @@ export const routePath = [
         index: false,
         path: "product-management",
         title: "Product Management",
-        component: <ProductListLayout />,
+        component: <ProductListLayout />
       },
       {
         index: false,
         path: "my-warehouse",
         title: "My Warehouse",
-        component: <MyWarehouse />,
+        component: <MyWarehouse />
       },
       {
         index: false,
         path: "daily",
         title: "Daily Report",
-        component: <DailyReport />,
-      },
-    ],
+        component: <DailyReport />
+      }
+    ]
   },
   {
     index: false,
     path: "import-management",
     icon: "far fa-circle",
     title: "Import Management",
-    component: <ImportManagement />,
+    component: <ImportManagement />
   },
   {
     index: false,
     path: "export-management",
     icon: "far fa-circle",
     title: "Export Management",
-    component: <ExportManagement />,
+    component: <ExportManagement />
   },
   {
     index: false,
@@ -73,15 +74,15 @@ export const routePath = [
         index: false,
         path: "vehicle",
         title: "Vehicle",
-        component: <Vehicle />,
+        component: <Vehicle />
       },
       {
         index: false,
         path: "driver",
         title: "Driver",
-        component: <Driver />,
-      },
-    ],
+        component: <DriverListLayout />
+      }
+    ]
   },
   {
     index: false,
@@ -93,36 +94,36 @@ export const routePath = [
         index: false,
         path: "orders",
         title: "Orders",
-        component: <Orders />,
+        component: <Orders />
       },
       {
         index: false,
         path: "shipment",
         title: "Shipment",
-        component: <Shipment />,
-      },
-    ],
+        component: <Shipment />
+      }
+    ]
   },
   {
     index: false,
     path: "report",
     icon: "far fa-circle",
     title: "Report",
-    component: <Report />,
+    component: <Report />
   },
   {
     index: false,
     path: "salary",
     icon: "far fa-circle",
     title: "Salary",
-    component: <Salary />,
+    component: <Salary />
   },
   {
     index: false,
     path: "account",
     icon: "far fa-circle",
     title: "Account",
-    component: <Account />,
+    component: <Account />
   },
   {
     index: false,
@@ -134,8 +135,8 @@ export const routePath = [
   {
     index: false,
     path: "*",
-    component: <NoMatch />,
-  },
+    component: <NoMatch />
+  }
 ];
 
 function MyWarehouse() {

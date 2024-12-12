@@ -1,5 +1,4 @@
 "use client";
-import { CreatePartner } from "@/components/form/createPartner/CreatePartner";
 import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";
 import { TableLayout } from "@/components/layout/TableLayout/TableLayout";
 import { RootState } from "@/redux/store";
@@ -10,6 +9,7 @@ import "./PartnerListLayout.scss";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
 import { listPartner, removePartner } from "@/redux/reducers/partnerReducers";
+import { CreatePartner } from "@/components/form/CreatePartner/CreatePartner";
 export interface DataPartner {
   id: number;
   name: string;
@@ -35,7 +35,9 @@ const PartnerListLayout = () => {
   };
 
   useEffect(() => {
-    const newData = partnerAPI.filter((item) => item.type === type || type === 'all');
+    const newData = partnerAPI.filter(
+      (item) => item.type === type || type === "all"
+    );
     setData(newData);
   }, [type]);
 
@@ -44,7 +46,7 @@ const PartnerListLayout = () => {
   }, [partnerAPI]);
 
   useEffect(() => {
-    dispatch(listPartner())
+    dispatch(listPartner());
   }, []);
 
   return (
@@ -66,22 +68,24 @@ const PartnerListLayout = () => {
               <th>Actions</th>
             </tr>
           )}
-          rowRender={
-            (item: any) => (
-              <tr>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.phoneNumber}</td>
-                <td>{item.type}</td>
-                <td>
-                  <div className="d-flex flex-md-row flex-column action-button">
-                    <ButtonActionEdit onClickEdit={() => { }} />
-                    <ButtonActionDelete onClickDelete={() => { handleDelete(item.id) }} />
-                  </div>
-                </td>
-              </tr>
-            )
-          }
+          rowRender={(item: any) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.email}</td>
+              <td>{item.phoneNumber}</td>
+              <td>{item.type}</td>
+              <td>
+                <div className="d-flex flex-md-row flex-column action-button">
+                  <ButtonActionEdit onClickEdit={() => {}} />
+                  <ButtonActionDelete
+                    onClickDelete={() => {
+                      handleDelete(item.id);
+                    }}
+                  />
+                </div>
+              </td>
+            </tr>
+          )}
         />
       </>
     </TableLayout>
