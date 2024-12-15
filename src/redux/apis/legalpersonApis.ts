@@ -9,7 +9,7 @@ export const legalpersonApis = {
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.post(`/legalpersons`, data, config)
+        return yield MainApiRequest.post(`/legal-persons`, data, config)
     },
 
     update: function* (id: number, data: { name: string, adress: string, email: string, phoneNumber: string, identityNumber: string }): any {
@@ -19,7 +19,7 @@ export const legalpersonApis = {
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.put(`/legalpersons${id}`, data, config)
+        return yield MainApiRequest.put(`/legal-persons${id}`, data, config)
     },
 
     delete: function* (id: number): any {
@@ -29,7 +29,7 @@ export const legalpersonApis = {
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.delete(`/legalpersons/${id}`, config)
+        return yield MainApiRequest.delete(`/legal-persons/${id}`, config)
     },
 
     list: function* (): any {
@@ -39,6 +39,6 @@ export const legalpersonApis = {
                 // 'Authorization': `Bearer ${authorization}`,
             },
         }
-        return yield MainApiRequest.get(`/legalpersons/list`, config)
+        return yield MainApiRequest.get(`/legal-persons/list`, config)
     },
 };

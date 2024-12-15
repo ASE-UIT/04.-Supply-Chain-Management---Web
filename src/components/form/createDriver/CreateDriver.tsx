@@ -1,44 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./CreateDriver.scss";
 import { useDispatch } from "react-redux";
 import { createDriver } from "@/redux/reducers/driverReducers";
+import MainApiRequest from "@/redux/apis/MainApiRequest";
+import { LicenseType } from "@/pages/DriverList/DriverListLayout";
 
-export const CreateDriver = ({ onclose }: any) => {
+
+export const CreateDriver = ({ onclose, onsubmit }: any) => {
   const dispatch = useDispatch();
   const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
   const [license, setLicense] = useState<string>("");
+  const [licenseType, setLicenseType] = useState<LicenseType>(LicenseType.B2);
+  const [vehicle, setVehicle] = useState<number>(1);
+  const [phone, setPhone] = useState<string>("");
+  const [vehicles, setVehicles] = useState<any>([]);
 
-  const handleCreateDriver = () => {
-    if (!name || !phone || !license || !email) {
+  const fetchVehicles = async () => {
+    const vec = await MainApiRequest.get("/vehicles/list");
+    setVehicles(vec.data);
+  }
+
+  useEffect(() => {
+    if (!vehicles.length) {
+      fetchVehicles();
+    }
+  }, []);
+
+  const handleCreateDriver = async () => {
+    if (!name || !licenseType || !license || !vehicle) {
       alert("Missing required fields");
       return;
     }
 
-    if (license.length !== 12) {
-      alert("License Number must be 12 digits");
-      return;
+    const data = {
+      name,
+      licenseNumber: license,
+      licenseType,
+      vehicleId: vehicle,
+      phoneNumber: phone
+    };
+
+    const res = await MainApiRequest.post("/drivers", data);
+
+    if (res.status === 200) {
+      onsubmit();
+    } else {
+      alert("Failed to create driver");
     }
-    dispatch(
-      createDriver({
-        data: { name: name, phoneNumber: phone, licenseNumber: license }
-      })
-    );
-    onclose();
+
+    // onclose();
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <h3 className="title-add">Add New Driver</h3>
-        <div className="add-info-box" style={{ height: 368 }}>
+        <div className="add-info-box" style={{ height: 468 }}>
           <div className="add-name">
             <p className="title-add-name">Name</p>
             <input
               className="input-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="add-license-number">
+            <p className="title-license-number">Phone</p>
+            <input
+              className="input-license-number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="add-license-number">
@@ -50,20 +81,42 @@ export const CreateDriver = ({ onclose }: any) => {
             />
           </div>
           <div className="add-location">
-            <p className="title-add-location">Email</p>
-            <input
+            <p className="title-add-location">LicenseType</p>
+            <select
               className="input-location"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+              value={licenseType}
+              onChange={(e) => setLicenseType(e.target.value as LicenseType)}
+            >
+              <option key={"B2"} value={"B2"}>
+                B2
+              </option>
+              <option key={"C"} value={"C"}>
+                C
+              </option>
+              <option key={"D"} value={"D"}>
+                D
+              </option>
+              <option key={"E"} value={"E"}>
+                E
+              </option>
+              <option key={"FC"} value={"FC"}>
+                FC
+              </option>
+            </select>
           </div>
           <div className="add-location">
-            <p className="title-add-location">Phone</p>
-            <input
+            <p className="title-add-location">Vehicle</p>
+            <select
               className="input-location"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+              value={vehicle}
+              onChange={(e) => setVehicle(parseInt(e.target.value))}
+            >
+              {vehicles.map((vec: any) => (
+                <option key={vec.id} value={vec.id}>
+                  {vec.licensePlate}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         {/* 

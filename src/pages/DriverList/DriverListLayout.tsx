@@ -1,13 +1,13 @@
 "use client";
+import { CreateDriver } from "@/components/form/createDriver/CreateDriver";
 import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
 import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
 import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";
 import { TableLayout } from "@/components/layout/TableLayout/TableLayout";
-import { RootState } from "@/redux/store";
+import MainApiRequest from "@/redux/apis/MainApiRequest";
+import { removeDriver } from "@/redux/reducers/driverReducers";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { listDriver, removeDriver } from "@/redux/reducers/driverReducers";
-import { CreateDriver } from "@/components/form/CreateDriver/CreateDriver";
+import { useDispatch } from "react-redux";
 
 export enum LicenseType {
   B2 = "B2",
@@ -19,17 +19,15 @@ export enum LicenseType {
 export interface DataDriver {
   id: number;
   name: string;
-  email: string;
   phoneNumber: string;
   licenseType: LicenseType;
+  licenseNumber: string;
 }
 
 const DriverListLayout = () => {
   const dispatch = useDispatch();
-  const driverAPI = useSelector((state: RootState) => state.driver.data);
   const [data, setData] = useState<DataDriver[]>([]);
 
-  const [licenseType, setLicenseType] = useState("all");
   const [clickNew, setClickNew] = useState(false);
 
   const handleClickNewButton = () => {
@@ -40,25 +38,33 @@ const DriverListLayout = () => {
     dispatch(removeDriver({ id }));
   };
 
-  useEffect(() => {
-    setData(driverAPI);
-  }, [driverAPI]);
+  const fetchDrivers = async () => {
+    const res = await MainApiRequest.get("/drivers/list");
+    setData(res.data);
+  };
 
   useEffect(() => {
-    dispatch(listDriver());
+    if (!data.length) {
+      fetchDrivers();
+    }
   }, []);
+
+  const handleFinishCreate = () => {
+    setClickNew(false);
+    fetchDrivers();
+  };
 
   return (
     <TableLayout title="Driver List" onClickNew={handleClickNewButton}>
       <>
-        {clickNew && <CreateDriver onclose={handleClickNewButton} />}
+        {clickNew && <CreateDriver onclose={handleClickNewButton} onsubmit={handleFinishCreate} />}
         <DataTable
           dataAPI={data}
           headerRender={() => (
             <tr>
               <th>Name</th>
-              <th>Email</th>
               <th>Phone</th>
+              <th>License Number</th>
               <th>License Type</th>
               <th>Actions</th>
             </tr>
@@ -66,12 +72,12 @@ const DriverListLayout = () => {
           rowRender={(item: DataDriver) => (
             <tr key={item.id}>
               <td>{item.name}</td>
-              <td>{item.email}</td>
               <td>{item.phoneNumber}</td>
+              <td>{item.licenseNumber}</td>
               <td>{item.licenseType}</td>
               <td>
                 <div className="d-flex flex-md-row flex-column action-button">
-                  <ButtonActionEdit onClickEdit={() => {}} />
+                  <ButtonActionEdit onClickEdit={() => { }} />
                   <ButtonActionDelete
                     onClickDelete={() => {
                       handleDelete(item.id);
