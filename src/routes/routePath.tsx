@@ -5,6 +5,8 @@ import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
 import VehicleListLayout from "@/pages/VehicleList/tab/tabLayout/VehicleListLayout";
 import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
 // import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
+import ImportManagementLayout from "@/pages/ImportManagement/ImportListLayout";
+import ExportManagementLayout from "@/pages/ExportManagement/ExportListLayout";
 
 import { Link } from "react-router-dom";
 
@@ -55,14 +57,14 @@ export const routePath = [
     path: "import-management",
     icon: "far fa-circle",
     title: "Import Management",
-    component: <ImportManagement />
+    component: <ImportManagementLayout />
   },
   {
     index: false,
     path: "export-management",
     icon: "far fa-circle",
     title: "Export Management",
-    component: <ExportManagement />
+    component: <ExportManagementLayout />
   },
   {
     index: false,
