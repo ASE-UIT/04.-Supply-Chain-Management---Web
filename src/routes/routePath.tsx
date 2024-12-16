@@ -2,7 +2,7 @@ import LegalPersonListLayout from "@/pages/LegalPersonList/tabLayout/LegalPerson
 import DriverListLayout from "@/pages/DriverList/DriverListLayout";
 import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
 import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
-import Vehicle from "@/pages/Vehicle/Vehicle";
+import VehicleListLayout from "@/pages/VehicleList/tab/tabLayout/VehicleListLayout";
 import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
 // import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
 
@@ -74,7 +74,7 @@ export const routePath = [
         index: false,
         path: "vehicle",
         title: "Vehicle",
-        component: <Vehicle />
+        component: <VehicleListLayout />
       },
       {
         index: false,
