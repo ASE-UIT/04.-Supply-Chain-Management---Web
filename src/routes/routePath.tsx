@@ -7,6 +7,8 @@ import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseLi
 // import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
 import ImportManagementLayout from "@/pages/ImportManagement/ImportListLayout";
 import ExportManagementLayout from "@/pages/ExportManagement/ExportListLayout";
+import OrderLayout from "@/pages/Orders/OrdersLayout"
+import CustomerLayout from "@/pages/Customers/CustomerLayout"
 
 import { Link } from "react-router-dom";
 
@@ -96,7 +98,7 @@ export const routePath = [
         index: false,
         path: "orders",
         title: "Orders",
-        component: <Orders />
+        component: <OrderLayout />
       },
       {
         index: false,
@@ -133,6 +135,13 @@ export const routePath = [
     icon: "far fa-circle",
     title: "Legal Person",
     component: <LegalPersonListLayout />,
+  },
+  {
+    index: false,
+    path: "customer",
+    icon: "far fa-circle",
+    title: "Customer",
+    component: <CustomerLayout />,
   },
   {
     index: false,
