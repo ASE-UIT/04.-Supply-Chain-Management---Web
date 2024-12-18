@@ -1,29 +1,25 @@
 "use client";
-import { CreateDriver } from "./CreateDriver";
 import MainApiRequest from "@/redux/apis/MainApiRequest";
-import { removeDriver } from "@/redux/reducers/driverReducers";
+import { listLegalPerson } from "@/redux/reducers/legalpersonReducers";
+import { RootState } from "@/redux/store";
 import { Button, Table } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CreateLegalPerson } from "./CreateLegalPerson";
 
-export enum LicenseType {
-  B2 = "B2",
-  C = "C",
-  D = "D",
-  E = "E",
-}
-
-export interface DataDriver {
+export interface DataLegalPerson {
   id: number;
   name: string;
+  email: string;
   phoneNumber: string;
-  licenseType: LicenseType;
-  licenseNumber: string;
+  adress: string;
+  identityNumber: string;
 }
 
-const DriverListLayout = () => {
+const LegalPersonListLayout = () => {
   const dispatch = useDispatch();
-  const [data, setData] = useState<DataDriver[]>([]);
+  const legalpersonAPI = useSelector((state: RootState) => state.legalperson.data);
+  const [data, setData] = useState<DataLegalPerson[]>([]);
 
   const [clickNew, setClickNew] = useState(false);
 
@@ -32,42 +28,30 @@ const DriverListLayout = () => {
   };
 
   const handleDelete = async (id: number) => {
-    // dispatch(removeDriver({ id }));
-    await MainApiRequest.delete(`/drivers/${id}`);
-    fetchDrivers();
-  };
-
-  const fetchDrivers = async () => {
-    const res = await MainApiRequest.get("/drivers/list");
-    setData(res.data);
+    // dispatch(removeLegalPerson({ id }));
+    await MainApiRequest.delete(`/legal-persons/${id}`);
+    dispatch(listLegalPerson())
   };
 
   useEffect(() => {
-    if (!data.length) {
-      fetchDrivers();
-    }
-  }, []);
+    setData(legalpersonAPI);
+  }, [legalpersonAPI]);
 
-  const handleFinishCreate = () => {
-    setClickNew(false);
-    fetchDrivers();
-  };
+  useEffect(() => {
+    dispatch(listLegalPerson())
+  }, []);
 
   return (
     <>
       <div className="m-4">
-        <h3>Drivers</h3>
+        <h3>Legal Persons</h3>
         <Button
           className="my-2"
           onClick={handleClickNewButton}
         >
-          New Driver
+          New Legal Person
         </Button>
-        <CreateDriver
-          onclose={handleClickNewButton}
-          onsubmit={handleFinishCreate}
-          visible={clickNew}
-        />
+        <CreateLegalPerson onclose={handleClickNewButton} visible={clickNew} />
         <Table
           dataSource={data}
           columns={[
@@ -77,24 +61,29 @@ const DriverListLayout = () => {
               key: "name",
             },
             {
+              title: "Email",
+              dataIndex: "email",
+              key: "email",
+            },
+            {
               title: "Phone",
               dataIndex: "phoneNumber",
               key: "phoneNumber",
             },
             {
-              title: "License Number",
-              dataIndex: "licenseNumber",
-              key: "licenseNumber",
+              title: "Adress",
+              dataIndex: "adress",
+              key: "adress",
             },
             {
-              title: "License Type",
-              dataIndex: "licenseType",
-              key: "licenseType",
+              title: "Identity Number",
+              dataIndex: "identityNumber",
+              key: "identityNumber",
             },
             {
-              title: "Actions",
-              key: "actions",
-              render: (text: any, record: DataDriver) => (
+              title: "Action",
+              key: "action",
+              render: (text: any, record: any) => (
                 <div className="d-flex flex-md-row flex-column action-button">
                   <Button onClick={() => { }}>
                     <i className="fas fa-edit"></i>
@@ -112,4 +101,4 @@ const DriverListLayout = () => {
   );
 };
 
-export default DriverListLayout;
+export default LegalPersonListLayout;

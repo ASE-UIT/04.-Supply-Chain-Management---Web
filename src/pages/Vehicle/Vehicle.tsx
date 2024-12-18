@@ -1,15 +1,7 @@
-"use client";
-import { CreatePartner } from "@/components/form/createPartner/CreatePartner";
-import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
-import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
-import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";
-import { TableLayout } from "@/components/layout/TableLayout/TableLayout";
 import MainApiRequest from "@/redux/apis/MainApiRequest";
-import { removePartner } from "@/redux/reducers/partnerReducers";
-import { RootState } from "@/redux/store";
+import { Button, Form, Input, InputNumber, Modal, Select, Table } from "antd";
 import { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+
 export interface DataVehicle {
   id: number;
   licensePlate: string;
@@ -20,29 +12,20 @@ export interface DataVehicle {
 }
 
 const Vehicle = () => {
-  const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const [data, setData] = useState<DataVehicle[]>([]);
   const [clickNew, setClickNew] = useState(false);
-
-  const handleClickNewButton = () => {
-    setClickNew(!clickNew);
-  };
-
-  const handleDelete = (id: number) => {
-    dispatch(removePartner({ id }));
-  };
-
-
-  const [cType, setCType] = useState("COLD");
-  const [partner, setPartner] = useState("");
-  const [capacity, setCapacity] = useState("");
-  const [plate, setPlate] = useState("");
   const [partners, setPartners] = useState<any>([]);
 
   const fetchPartners = async () => {
     const par = await MainApiRequest.get("/partners/list");
     setPartners(par.data);
-  }
+  };
+
+  const fetchVehicles = async () => {
+    const res = await MainApiRequest.get("/vehicles/list");
+    setData(res.data);
+  };
 
   useEffect(() => {
     if (!partners.length) {
@@ -50,123 +33,116 @@ const Vehicle = () => {
     }
 
     if (!data.length) {
-      MainApiRequest.get("/vehicles/list").then((res) => {
-        setData(res.data);
-      });
+      fetchVehicles();
     }
   }, []);
 
-  const handleCreateVehicle = () => {
-    let pn = partner;
-    if (!partner) {
-      pn = partners[0].id;
-    }
+  const handleDelete = async (id: number) => {
+    // dispatch(removePartner({ id }));
+    await MainApiRequest.delete(`/vehicles/${id}`);
+    await fetchVehicles();
+  };
 
+  const handleCreateVehicle = async (values: any) => {
     const data = {
-      licensePlate: plate,
-      type: cType,
-      capacity: parseInt(capacity),
-      partnerId: parseInt(pn),
+      licensePlate: values.plate,
+      type: values.cType,
+      capacity: parseInt(values.capacity),
+      partnerId: parseInt(values.partner),
       status: "ACTIVE",
       availability: true,
     };
 
-    MainApiRequest.post("/vehicles", data).then((res) => {
-      if (res.status === 200) {
-        MainApiRequest.get("/vehicles/list").then((res) => {
-          setData(res.data);
-        });
-        setClickNew(false);
-      }
-    });
+    const res = await MainApiRequest.post("/vehicles", data);
+    if (res.status === 200) {
+      const res2 = await MainApiRequest.get("/vehicles/list")
+      setData(res2.data);
+      setClickNew(false);
+    }
   };
 
   return (
-    <TableLayout title="Vehicle List" onClickNew={handleClickNewButton}>
-      <>
-        <Modal onBackdropClick={() => setClickNew(false)} show={clickNew} title="Create Vehicle" onClose={() => setClickNew(false)}>
-          <Modal.Header>
-            <h3 className="title-add">Add New Vehicle</h3>
-
-          </Modal.Header>
-          <Modal.Body>
-            <div className="form-group">
-              <label>Partner:</label>
-              <select
-                className="form-control"
-                value={partner}
-                onChange={(e) => setPartner(e.target.value)}
-              >
+    <>
+      <div className="m-4">
+        <h3>Vehicle</h3>
+        <Button
+          className="my-2"
+          onClick={() => setClickNew(true)}
+        >
+          New Vehicle
+        </Button>
+        <Modal
+          open={clickNew}
+          onCancel={() => setClickNew(false)}
+          title="Create Vehicle"
+          className="modal-overlay"
+          onOk={() => handleCreateVehicle(form.getFieldsValue())}
+        >
+          <Form form={form}>
+            <Form.Item label="Partner" name="partner">
+              <Select>
                 {partners.map((partner: any, index: number) => (
-                  <option key={partner.id} value={partner.id}>
+                  <Select.Option key={partner.id} value={partner.id}>
                     {partner.name}
-                  </option>
+                  </Select.Option>
                 ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Type:</label>
-              <select
-                className="form-control"
-                value={cType}
-                onChange={(e) => setCType(e.target.value)}
-              >
-                <option value="COLD">COLD</option>
-                <option value="NORMAL">NORMAL</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Capacity:</label>
-              <input
-                type="number"
-                className="form-control"
-                value={capacity}
-                onChange={(e) => setCapacity(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Plate Number:</label>
-              <input
-                type="text"
-                className="form-control"
-                value={plate}
-                onChange={(e) => setPlate(e.target.value)}
-              />
-            </div>
-            <button className="btn btn-primary" onClick={handleCreateVehicle}>Create</button>
-          </Modal.Body>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Type" name="cType">
+              <Select>
+                <Select.Option value="COLD">COLD</Select.Option>
+                <Select.Option value="NORMAL">NORMAL</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Capacity" name="capacity">
+              <InputNumber />
+            </Form.Item>
+            <Form.Item label="Plate Number" name="plate">
+              <Input />
+            </Form.Item>
+          </Form>
         </Modal>
-        <DataTable
-          dataAPI={data}
-          headerRender={() => (
-            <tr>
-              <th>Plate Num</th>
-              <th>Capacity</th>
-              <th>Type</th>
-              <th>Actions</th>
-            </tr>
-          )}
-          rowRender={(item: DataVehicle) => (
-            <tr>
-              <td>{item.licensePlate}</td>
-              <td>{item.capacity}</td>
-              <td>{item.type}</td>
-              <td>
+        <Table
+          dataSource={data}
+          columns={[
+            {
+              title: "Plate Number",
+              dataIndex: "licensePlate",
+              key: "licensePlate",
+            },
+            {
+              title: "Capacity",
+              dataIndex: "capacity",
+              key: "capacity",
+            },
+            {
+              title: "Type",
+              dataIndex: "type",
+              key: "type",
+            },
+            {
+              title: "Actions",
+              key: "actions",
+              render: (text: any, record: any) => (
                 <div className="d-flex flex-md-row flex-column action-button">
-                  <ButtonActionEdit onClickEdit={() => { }} />
-                  <ButtonActionDelete
-                    onClickDelete={() => {
-                      handleDelete(item.id);
+                  <Button onClick={() => { }}>
+                    <i className="fas fa-edit"></i>
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      handleDelete(record.id);
                     }}
-                  />
+                  >
+                    <i className="fas fa-trash"></i>
+                  </Button>
                 </div>
-              </td>
-            </tr>
-          )}
+              ),
+            },
+          ]}
         />
-      </>
-    </TableLayout>
+      </div>
+    </>
   );
-}
+};
 
 export default Vehicle;

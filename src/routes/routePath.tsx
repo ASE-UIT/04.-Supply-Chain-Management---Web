@@ -1,16 +1,16 @@
-import LegalPersonListLayout from "@/pages/LegalPersonList/tabLayout/LegalPersonListLayout";
 import DriverListLayout from "@/pages/DriverList/DriverListLayout";
-import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
-import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
-import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
-// import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
 import ImportManagementLayout from "@/pages/ImportManagement/ImportListLayout";
 import ExportManagementLayout from "@/pages/ExportManagement/ExportListLayout";
 import OrderLayout from "@/pages/Orders/OrdersLayout"
 import CustomerLayout from "@/pages/Customers/CustomerLayout"
+import DetailWarehouse from "@/pages/DetailWarehouse/DetailWarehouse";
 
 import { Link } from "react-router-dom";
 import Vehicle from "@/pages/Vehicle/Vehicle";
+import PartnerListLayout from "@/pages/PartnerList/PartnerListLayout";
+import WarehouseListLayout from "@/pages/WarehouseList/WarehouseListLayout";
+import ProductListLayout from "@/pages/ProductList/ProductListLayout";
+import LegalPersonListLayout from "@/pages/LegalPersonList/LegalPersonListLayout";
 
 // Định nghĩa các route trong ứng dụng
 export const routePath = [
@@ -26,7 +26,7 @@ export const routePath = [
     path: "warehouse",
     icon: "far fa-circle",
     title: "Warehouse",
-    component: <WareHouseListLayout />
+    component: <WarehouseListLayout />
   },
   {
     index: false,
@@ -145,6 +145,11 @@ export const routePath = [
   },
   {
     index: false,
+    path: "warehouse/:id",
+    component: <DetailWarehouse />
+  },
+  {
+    index: false,
     path: "*",
     component: <NoMatch />
   }
@@ -152,101 +157,71 @@ export const routePath = [
 
 function MyWarehouse() {
   return (
-    <div>
-      <h2>My Warehouse</h2>
-      <p>Chi tiết kho hàng của bạn</p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>My Warehouse</h3>
+      </div>
+    </>
   );
 }
 
 function DailyReport() {
   return (
-    <div>
-      <h2>Daily Report</h2>
-      <p>Báo cáo hàng ngày</p>
-    </div>
-  );
-}
-
-function ImportManagement() {
-  return (
-    <div>
-      <h2>Import Management</h2>
-      <p>Quản lý thông tin nhập kho</p>
-    </div>
-  );
-}
-
-function ExportManagement() {
-  return (
-    <div>
-      <h2>Export Management</h2>
-      <p>Quản lý thông tin xuất kho</p>
-    </div>
-  );
-}
-
-function Driver() {
-  return (
-    <div>
-      <h2>Driver</h2>
-      <p>Quản lý tài xế và các thông tin liên quan</p>
-    </div>
-  );
-}
-
-function Orders() {
-  return (
-    <div>
-      <h2>Orders</h2>
-      <p>Quản lý đơn hàng trong hệ thống</p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>Daily Report</h3>
+      </div>
+    </>
   );
 }
 
 function Shipment() {
   return (
-    <div>
-      <h2>Shipment</h2>
-      <p>Quản lý lô hàng và theo dõi trạng thái</p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>Shipment</h3>
+      </div>
+    </>
   );
 }
 
 function Report() {
   return (
-    <div>
-      <h2>Report</h2>
-      <p>Thống kê và báo cáo hoạt động</p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>Report</h3>
+      </div>
+    </ >
   );
 }
 
 function Salary() {
   return (
-    <div>
-      <h2>Salary</h2>
-      <p>Quản lý lương và các chế độ nhân viên</p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>Salary</h3>
+      </div>
+    </>
   );
 }
 
 function Account() {
   return (
-    <div>
-      <h2>Account</h2>
-      <p>Thông tin tài khoản cá nhân</p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>Account</h3>
+      </div>
+    </>
   );
 }
 
 function NoMatch() {
   return (
-    <div>
-      <h2>Không tìm thấy trang!</h2>
-      <p>
-        <Link to="/">Quay lại trang chủ</Link>
-      </p>
-    </div>
+    <>
+      <div className="m-4">
+        <h3>404 Not Found</h3>
+        <Link to="/">Go to Home</Link>
+      </div>
+    </>
   );
 }

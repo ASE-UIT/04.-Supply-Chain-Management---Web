@@ -1,14 +1,7 @@
 "use client";
-import DataTable from "@/components/layout/TableLayout/DataTable/DataTable";
-import { TableLayout } from "@/components/layout/TableLayout/TableLayout";
-import { RootState } from "@/redux/store";
+import MainApiRequest from "@/redux/apis/MainApiRequest";
+import { Button, Table } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "./OrdersLayout.scss";
-import ButtonActionEdit from "@/components/layout/TableLayout/Buttons/ButtonActionEdit";
-import ButtonActionDelete from "@/components/layout/TableLayout/Buttons/ButtonActionDelete";
-import { CreateOrder } from "@/components/form/createOrder/CreateOrder";
-import { listOrder, removeOrder } from "@/redux/reducers/orderReducers";
 
 export interface DataOrder {
   id: number;
@@ -22,7 +15,6 @@ export interface DataOrder {
 }
 
 const OrderManagement = () => {
-  const dispatch = useDispatch();
   const [data, setData] = useState<DataOrder[]>([]);
 
   const [clickNew, setClickNew] = useState(false);
@@ -31,58 +23,79 @@ const OrderManagement = () => {
     setClickNew(!clickNew);
   };
 
-  const handleDelete = (id: number) => {
-    dispatch(removeOrder({ id }));
+  const handleDelete = async (id: number) => {
+    await MainApiRequest.delete(`/orders/${id}`);
+    fetchOrders();
+  };
+
+  const fetchOrders = async () => {
+    const res = await MainApiRequest.get("/orders/list");
+    setData(res.data);
   };
 
   useEffect(() => {
-    dispatch(listOrder());
+    if (!data.length) {
+      fetchOrders()
+    }
   }, []);
 
   return (
-    <TableLayout
-      title="Purchase Orders"
-    >
-      <>
-        <DataTable
-          dataAPI={data}
-          headerRender={() => (
-            <tr>
-                <th>Order ID</th>
-                <th>Customer Name</th>
-                <th>Warehouse Name</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Order Date</th>
-                <th>Total Price</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-          )}
-          rowRender={(item: any) => (
-            <tr>
-                <td>I0001</td>
-                <td>Customer 1</td>
-                <td>Warehouse 1</td>
-                <td>Product 1</td>
-                <td>100</td>
-                <td>10000000</td>
-                <td>Approved</td>
-                <td>
-                    <div className="d-flex flex-md-row flex-column action-button">
-                    <ButtonActionEdit onClickEdit={() => {}} />
-                    <ButtonActionDelete
-                        onClickDelete={() => {
-                        handleDelete(item.id);
-                        }}
-                    />
-                    </div>
-                </td>
-            </tr>
-          )}
+    <>
+      <div className="m-4">
+        <h3>Orders</h3>
+        <Button
+          className="my-2"
+          onClick={handleClickNewButton}
+        >
+          New Order
+        </Button>
+        <Table
+          dataSource={data}
+          columns={[
+            {
+              title: "Order Name",
+              dataIndex: "name",
+              key: "name",
+            },
+            {
+              title: "Customer Name",
+              dataIndex: "customer",
+              render: (customer: any) => customer.name,
+            },
+            {
+              title: "Remark",
+              dataIndex: "remark",
+              key: "remark",
+            },
+            {
+              title: "Total",
+              dataIndex: "total",
+              key: "total",
+            },
+            {
+              title: "Status",
+              dataIndex: "status",
+              key: "status",
+            },
+            {
+              title: "Actions",
+              dataIndex: "actions",
+              key: "actions",
+              render: (text: any, record: any) => (
+                <div className="d-flex flex-md-row flex-column action-button">
+                  <Button onClick={() => { }}>
+                    <i className="fas fa-edit"></i>
+                  </Button>
+                  <Button onClick={() => handleDelete(record.id)}>
+                    <i className="fas fa-trash"></i>
+                  </Button>
+                </div>
+              ),
+            },
+          ]}
         />
-      </>
-    </TableLayout>
+      </div>
+    </>
   );
 };
 
