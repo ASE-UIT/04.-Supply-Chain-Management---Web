@@ -2,7 +2,6 @@ import LegalPersonListLayout from "@/pages/LegalPersonList/tabLayout/LegalPerson
 import DriverListLayout from "@/pages/DriverList/DriverListLayout";
 import PartnerListLayout from "@/pages/PartnerList/tabLayout/PartnerListLayout";
 import ProductListLayout from "@/pages/ProductList/tabLayout/ProductListLayout";
-import VehicleListLayout from "@/pages/VehicleList/tab/tabLayout/VehicleListLayout";
 import WareHouseListLayout from "@/pages/WarehouseList/tab/tabLayout/WarehouseListLayout";
 // import ProductListLayout from "@/pages/product-list/tabLayout/ProductListLayout";
 import ImportManagementLayout from "@/pages/ImportManagement/ImportListLayout";
@@ -11,6 +10,7 @@ import OrderLayout from "@/pages/Orders/OrdersLayout"
 import CustomerLayout from "@/pages/Customers/CustomerLayout"
 
 import { Link } from "react-router-dom";
+import Vehicle from "@/pages/Vehicle/Vehicle";
 
 // Định nghĩa các route trong ứng dụng
 export const routePath = [
@@ -78,7 +78,7 @@ export const routePath = [
         index: false,
         path: "vehicle",
         title: "Vehicle",
-        component: <VehicleListLayout />
+        component: <Vehicle />
       },
       {
         index: false,
