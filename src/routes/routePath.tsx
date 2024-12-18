@@ -17,29 +17,30 @@ export const routePath = [
   {
     index: false,
     path: "partner",
-    icon: "far fa-circle",
+    icon: "far fa-handshake",
     title: "Partner",
     component: <PartnerListLayout />
   },
   {
     index: false,
     path: "warehouse",
-    icon: "far fa-circle",
+    icon: "fas fa-warehouse",
     title: "Warehouse",
     component: <WarehouseListLayout />
   },
   {
     index: false,
+    path: "products",
+    icon: "fas fa-cube",
+    title: "Products",
+    component: <ProductListLayout />
+  },
+  {
+    index: false,
     path: "my-warehouse",
-    icon: "far fa-circle",
+    icon: "fas fa-warehouse",
     title: "My Warehouse",
     children: [
-      {
-        index: false,
-        path: "product-management",
-        title: "Product Management",
-        component: <ProductListLayout />
-      },
       {
         index: false,
         path: "my-warehouse",
@@ -71,7 +72,7 @@ export const routePath = [
   {
     index: false,
     path: "transportation",
-    icon: "far fa-circle",
+    icon: "fas fa-truck-fast",
     title: "Transportation",
     children: [
       {
@@ -91,7 +92,7 @@ export const routePath = [
   {
     index: false,
     path: "logistic",
-    icon: "far fa-circle",
+    icon: "fas fa-gears",
     title: "Logistic",
     children: [
       {
@@ -125,21 +126,21 @@ export const routePath = [
   {
     index: false,
     path: "account",
-    icon: "far fa-circle",
+    icon: "fas fa-person",
     title: "Account",
     component: <Account />
   },
   {
     index: false,
     path: "legal-person",
-    icon: "far fa-circle",
+    icon: "fas fa-users",
     title: "Legal Person",
     component: <LegalPersonListLayout />,
   },
   {
     index: false,
     path: "customer",
-    icon: "far fa-circle",
+    icon: "fas fa-user-secret",
     title: "Customer",
     component: <CustomerLayout />,
   },

@@ -3,6 +3,7 @@ import { comparePathname } from "@/utils/uri";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.scss";
+import logoImg from "@/assets/images/logo.png";
 
 type SubRoutesState = {
   [key: string]: boolean;
@@ -36,16 +37,16 @@ export default function Sidebar() {
       const isOpen = openSubRoutes[route.path];
 
       return (
-        <li key={index} className={`nav-item ${hasChildren ? "dropdown" : ""}`}>
+        <li key={index} className={`flex-1 nav-item ${hasChildren ? "dropdown" : ""}`}>
           <Link
             to={hasChildren ? "#" : route.path}
             className={`nav-link ${isActive ? "nav-link-active" : "text-dark"}`}
             onClick={
               hasChildren
                 ? (e) => {
-                    e.preventDefault();
-                    toggleSubRoutes(route.path);
-                  }
+                  e.preventDefault();
+                  toggleSubRoutes(route.path);
+                }
                 : undefined
             }
           >
@@ -65,29 +66,27 @@ export default function Sidebar() {
           </Link>
 
           {hasChildren && isOpen && (
-            <ul className="nav-children nav nav-pills">
+            <ul className="nav-children nav nav-pills d-flex flex-column">
               {route.children.map((subRoute, subIndex) => (
                 <li key={subIndex} className="nav-item">
                   <Link
                     to={`${route.path}/${subRoute.path}`} // Kết hợp với route cha
-                    className={`nav-link ${
-                      comparePathname(
+                    className={`nav-link ${comparePathname(
+                      `${route.path}/${subRoute.path}`,
+                      currentPath
+                    )
+                      ? "nav-link-active"
+                      : "text-dark"
+                      }`}
+                  >
+                    <span
+                      className={`title ${comparePathname(
                         `${route.path}/${subRoute.path}`,
                         currentPath
                       )
-                        ? "nav-link-active"
+                        ? "title-active"
                         : "text-dark"
-                    }`}
-                  >
-                    <span
-                      className={`title ${
-                        comparePathname(
-                          `${route.path}/${subRoute.path}`,
-                          currentPath
-                        )
-                          ? "title-active"
-                          : "text-dark"
-                      }`}
+                        }`}
                     >
                       {subRoute.title}
                     </span>
@@ -102,10 +101,12 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center align-items-sm-start min-vh-100 sidebar">
-      <h1 className="logo">LOGO</h1>
-      <h5 className="systems">Systems</h5>
-      <ul className="nav nav-pills">{renderNavigationList()}</ul>
+    <div className="d-flex flex-column align-items-center w-100 min-vh-100 sidebar px-2">
+      <h1 className="logo">
+        <img src={logoImg} style={{ width: '100%', height: 'auto' }} />
+      </h1>
+      <h5 className="systems">Navigation Systems</h5>
+      <ul className="nav nav-pills d-flex flex-column w-100">{renderNavigationList()}</ul>
     </div>
   );
 }
