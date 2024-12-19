@@ -10,7 +10,7 @@ export const CreateWarehouse = ({ onclose }: any) => {
   const [partners, setPartners] = useState<any>([]);
 
   const fetchPartners = async () => {
-    const par = await MainApiRequest.get("/partners/list");
+    const par = await MainApiRequest.get("/partners/list?type=PARTNER_WAREHOUSE");
     setPartners(par.data);
   };
 

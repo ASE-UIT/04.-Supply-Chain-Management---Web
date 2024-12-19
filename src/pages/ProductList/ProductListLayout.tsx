@@ -29,7 +29,7 @@ const ProductListLayout = () => {
     dispatch(listProduct())
 
     if (partners.length === 0) {
-      MainApiRequest.get("/partners/list").then((res) => {
+      MainApiRequest.get("/partners/list?type=PARTNER_SUPPLIER").then((res) => {
         setPartners(res.data);
       });
     }

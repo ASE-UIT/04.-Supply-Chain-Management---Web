@@ -11,9 +11,24 @@ import PartnerListLayout from "@/pages/PartnerList/PartnerListLayout";
 import WarehouseListLayout from "@/pages/WarehouseList/WarehouseListLayout";
 import ProductListLayout from "@/pages/ProductList/ProductListLayout";
 import LegalPersonListLayout from "@/pages/LegalPersonList/LegalPersonListLayout";
+import Report from "@/pages/Report/Report";
 
 // Định nghĩa các route trong ứng dụng
 export const routePath = [
+  {
+    index: true,
+    path: "",
+    icon: "fas fa-gauge",
+    title: "Dashboard",
+    component: <Report />
+  },
+  {
+    index: false,
+    path: "legal-person",
+    icon: "fas fa-users",
+    title: "Legal Person",
+    component: <LegalPersonListLayout />,
+  },
   {
     index: false,
     path: "partner",
@@ -23,10 +38,10 @@ export const routePath = [
   },
   {
     index: false,
-    path: "warehouse",
-    icon: "fas fa-warehouse",
-    title: "Warehouse",
-    component: <WarehouseListLayout />
+    path: "customer",
+    icon: "fas fa-user-secret",
+    title: "Customer",
+    component: <CustomerLayout />,
   },
   {
     index: false,
@@ -34,6 +49,13 @@ export const routePath = [
     icon: "fas fa-cube",
     title: "Products",
     component: <ProductListLayout />
+  },
+  {
+    index: false,
+    path: "warehouse",
+    icon: "fas fa-warehouse",
+    title: "Warehouse",
+    component: <WarehouseListLayout />
   },
   {
     index: false,
@@ -58,14 +80,14 @@ export const routePath = [
   {
     index: false,
     path: "import-management",
-    icon: "far fa-circle",
+    icon: "fas fa-download",
     title: "Import Management",
     component: <ImportManagementLayout />
   },
   {
     index: false,
     path: "export-management",
-    icon: "far fa-circle",
+    icon: "fas fa-arrow-up-from-bracket",
     title: "Export Management",
     component: <ExportManagementLayout />
   },
@@ -111,15 +133,8 @@ export const routePath = [
   },
   {
     index: false,
-    path: "report",
-    icon: "far fa-circle",
-    title: "Report",
-    component: <Report />
-  },
-  {
-    index: false,
     path: "salary",
-    icon: "far fa-circle",
+    icon: "fas fa-receipt",
     title: "Salary",
     component: <Salary />
   },
@@ -129,20 +144,6 @@ export const routePath = [
     icon: "fas fa-person",
     title: "Account",
     component: <Account />
-  },
-  {
-    index: false,
-    path: "legal-person",
-    icon: "fas fa-users",
-    title: "Legal Person",
-    component: <LegalPersonListLayout />,
-  },
-  {
-    index: false,
-    path: "customer",
-    icon: "fas fa-user-secret",
-    title: "Customer",
-    component: <CustomerLayout />,
   },
   {
     index: false,
@@ -183,16 +184,6 @@ function Shipment() {
         <h3>Shipment</h3>
       </div>
     </>
-  );
-}
-
-function Report() {
-  return (
-    <>
-      <div className="m-4">
-        <h3>Report</h3>
-      </div>
-    </ >
   );
 }
 

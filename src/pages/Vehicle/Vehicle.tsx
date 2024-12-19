@@ -18,7 +18,7 @@ const Vehicle = () => {
   const [partners, setPartners] = useState<any>([]);
 
   const fetchPartners = async () => {
-    const par = await MainApiRequest.get("/partners/list");
+    const par = await MainApiRequest.get("/partners/list?type=PARTNER_DELIVER");
     setPartners(par.data);
   };
 
@@ -109,6 +109,13 @@ const Vehicle = () => {
               title: "Plate Number",
               dataIndex: "licensePlate",
               key: "licensePlate",
+            },
+            {
+              title: "Owner",
+              dataIndex: "partner",
+              render: (partner) => (
+                <span>{partner.name}</span>
+              ),
             },
             {
               title: "Capacity",
